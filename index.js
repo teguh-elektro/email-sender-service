@@ -16,19 +16,37 @@ app.post('/', async (req, res) => {
     const name = formData.name;
     const email = formData.email;
     const message = formData.message;
+
+    if(!email || !name || !message) throw new Error({message: "data is empty"});
+    
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      }
+        host: "smtp.hostinger.com",
+        port: 465,
+        secure: true,
+        secureConnection: false,
+        requireTLS: true,
+        tls: {
+            ciphers: "SSLv3",
+        },
+        debug: true,
+        connectionTimeout: 10000,
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD,
+        },
     });
 
     const mailOptions = {
       from: process.env.EMAIL,
       to: process.env.RECEIVER,
-      subject: `Logic Gate Simulator - ${email} - ${name}'s Message`,
-      html: `${message}`,
+      subject: `Teguh's Website Message`,
+      html: `
+        Name: ${name}
+        <br/>
+        Email: ${email}
+        <br/>
+        Message: ${message}
+      `,
     };
 
     const info = await transporter.sendMail(mailOptions);
@@ -42,7 +60,7 @@ app.post('/', async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 8000; // Port bisa diatur melalui variabel lingkungan atau default ke 8000
+const port = process.env.PORT || 8000; 
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
