@@ -37,15 +37,13 @@ app.post('/', async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.EMAIL,
+      from: process.env.SENDER,
       to: process.env.RECEIVER,
-      subject: `Teguh's Website Message`,
+      subject: `Website Message`,
       html: `
-        Name: ${name}
-        <br/>
-        Email: ${email}
-        <br/>
-        Message: ${message}
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong><br/>${message}</p>
       `,
     };
 
