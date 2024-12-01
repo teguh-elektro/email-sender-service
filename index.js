@@ -23,13 +23,6 @@ app.post('/', async (req, res) => {
         host: "smtp.hostinger.com",
         port: 465,
         secure: true,
-        secureConnection: false,
-        requireTLS: true,
-        tls: {
-            ciphers: "SSLv3",
-        },
-        debug: true,
-        connectionTimeout: 10000,
         auth: {
             user: process.env.EMAIL,
             pass: process.env.PASSWORD,
